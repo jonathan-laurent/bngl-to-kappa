@@ -4,7 +4,7 @@ This tool is aimed at translating rule-based models written in the
 BNGL language into Kappa. The translation is mostly syntactic and no
 semantic check of the original BNGL file is made.
 
-Here are a few subtelties about this translation:
+About the translation:
 
 + In BNGL, a pattern is given by a sequence of _species pattern_ separated
 by the `+` operator. Within a species pattern, agents are separated by the `.` operator
@@ -14,12 +14,12 @@ that a BNGL rule is not expressible in Kappa.
 
     * When the agents of a species pattern are explicitly connected by bonds, 
     the translation is easy: 
-    `K(d!1).S(d!1) -> K(d)+S(d)` becomes `K(d!1), S(d!1) -> K(d!.), S(d!.)`.
+    `K(d!1).S(d!1) -> K(d)+S(d)` becomes `K(d[1/.]), S(d[1/.])`.
     * Otherwise, if the rule's LHS only features one species pattern with
     only two components that are connected by bonds, the dual rate notation is used:
     `C(k!1).K(c!1).S(x~u) -> C(k!1).K(c!1).S(x~p) gamma` becomes 
-    `C(k!1),K(c!1),S(x~u) -> C(k!1),K(c!1), S(x~p) @ 0 {gamma}`.
-    * Otherwise, an error is issued.
+    `C(k[1]),K(c[1]),S(x{u/p}) @ 0 {gamma}`.
+    * Otherwise, an error is raised.
 
 
 + BNGL allows using the `dot` operator in defining observables. This feature
